@@ -1,32 +1,34 @@
 from kivy.app import App
-import os
+from path import join
+
+
+DEFAULT_FILE = "BINGO.txt"
+DATAFILE = "bingo.txt"
 
 
 class Database:
-	def __init__(self):
-		self.bingo_file = os.path.join(App.get_running_app().user_data_dir, "bingo.txt")
-		self.check_file = os.path.join(App.get_running_app().user_data_dir, "check.txt")
-		self.bingo = None
-		self.check = None
+	def __init__(self, directory):
+		self.filename = join(directory, DATAFILE)
+		self.__buildBingo()
+		self.check, self.bingo = self.__getData()
 
-	def load(self):
-		with open(self.bingo_file, "r", encoding="utf-8") as f:
-			self.bingo = eval(f.read())
-		
-		with open(self.check_file, "r", encoding="utf-8") as f:
-			self.check = eval(f.read())
+	def __getDefaultText(self):
+		with open(DEFAULT_FILE, "r", encoding='utf-8') as f:
+			text = f.read()
+		return text
 	
-	def save(self):
-		with open(self.check_file, "w", encoding="utf-8") as f:
-			f.write(str(self.check))
+	def __splitFile(self, file_content):
+		splitting_point = text.find("\n") + 1
+		check = text[:splitting_point]
+		bingo_text = text[splitting_point:]
+		return check, bingo_text
 	
-	def checkBingo(self, i):
-		self.check[i] = (self.check[i] + 1) % 2
-	
-	def __exit__(self, exc_type, exc_val, exc_tb):
-		self.save()
-	
-	def __enter__(self):
-		self.load()
-		return self
+	def __parseBingo(self, bingo_text):
+		bingo_list = bingo.
+	def __buildBingo(self):
+		if self.filename EXISTS: # TODO
+			return
+		text = self.__getDefaultText()
+		check, bingo_text = self.__splitFile(text)
+		bingo = self.__parseBingo(bingo_text)
 

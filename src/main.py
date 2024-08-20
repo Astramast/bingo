@@ -1,8 +1,6 @@
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager
-from random import shuffle
 from MainScreen import MainScreen
-import os
 
 
 class MyApp(App):
@@ -11,15 +9,18 @@ class MyApp(App):
 		self.sm = ScreenManager()
 		self.sm.add_widget(MainScreen(name="main"))
 		return self.sm
-
-	def	ensureDataExistence(self):
+	
+	def	ensureEventListExistence(self):
 		with Database() as db:
 			if not db.checkDataExistence():
 				self.createData()
-
-	def createData(self):
+	
+	def createEventList(self):
 		with Database() as db:
-			default_bingo = db.getDefaultBingo()
+			DEFAULT_EVENTLIST = db.getDefaultEventList()
+		DEFINITIVE_EVENTLIST = DEFAULT_EVENTLIST.getRandomized()
+		with Database() as db:
+			db.writeDefinitiveEventList(DEFINITIVE_EVENTLIST)
 
 
 if __name__ == "__main__":
