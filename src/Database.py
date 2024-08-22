@@ -1,40 +1,49 @@
 from kivy.app import App
-from path import join
+from random import shuffle
+from os.path import join, exists
 
 
 class Database:
-	class FileLoader:
+	class FileManager:
 		DEFAULT_FILE = "BINGO.txt"
 		DATAFILE = "bingo.txt"
 		def __init__(self, directory):
-			self.filename = join(directory, DATAFILE)
+			self.default_file = join(directory, self.DEFAULT_FILE)
+			print(self.default_file)
+			self.data_file = join(directory, self.DATAFILE)
 		
-		def getFileContent(self):
-			with open(filename, "r", encoding='utf-8') as f:
+		def __getFileContent(self, file):
+			with open(file, "r", encoding='utf-8') as f:
 				text = f.read()
 			return text
 		
-		def setFileContent(self, content):
-			with open(filename, "w", encoding='utf-8') as f:
+		def getDefaultContent(self):
+			return self.__getFileContent(self.default_file)
+		
+		def getDataContent(self):
+			return self.__getFileContent(self.data_file)
+		
+		def setDataContent(self, content):
+			with open(self.data_file, "w", encoding='utf-8') as f:
 				f.write(content)
+		
+		def checkDataExistence(self):
+			return exists(self.data_file)
 	
 	class BingoParser:
 		def __buildBingoList(self, bingo_text):
 			total_list = bingo_text.split("\n")
 			names = total_list.pop(0).split(",")
-			XX_list = []
 			bingo_list = []
 			for elem in total_list:
 				if "XX" in elem:
-					XX_list.append(elem)
+					for name in names:
+						bingo_list.append(elem.replace("XX", name))
 				else:
 					bingo_list.append(elem)
-			for name in names:
-				for i in XX_list:
-					bingo_list.append(i.replace("XX", name))
 			return bingo_list
 		
-		def __splitFile(self, file_content):
+		def __splitFile(self, text):
 			splitting_point = text.find("\n") + 1
 			check = text[:splitting_point]
 			bingo_text = text[splitting_point:]
@@ -47,16 +56,19 @@ class Database:
 	
 	def __init__(self, directory):
 		self.directory = directory
-		self.file_loader = self.FileLoader(directory)
+		self.file_manager = self.FileManager(directory)
 		self.bingo_parser = self.BingoParser()
 	
 		self.__buildBingo()
 		self.check, self.bingo = self.__getData()
 	
 	def __buildBingo(self):
-		if path.exists(DATAFILE):
+		if self.file_manager.checkDataExistence():
 			return
-		text = self.file_loader.getFileContent()
-		bingo = self.bingo_parser.parse(text)
-		self.__setData(bingo)
+		default_text = self.file_manager.getDefaultContent()
+		check, default_bingo = self.bingo_parser.parse(default_text)
+		bingo = default_bingo[:]
+		shuffle(bingo)
+		print(bingo)
+		self.file_manager.setDataContent(check + "\n" + "".join(bingo))
 
