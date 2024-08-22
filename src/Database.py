@@ -9,7 +9,6 @@ class Database:
 		DATAFILE = "bingo.txt"
 		def __init__(self, directory):
 			self.default_file = join(directory, self.DEFAULT_FILE)
-			print(self.default_file)
 			self.data_file = join(directory, self.DATAFILE)
 		
 		def __getFileContent(self, file):
@@ -60,7 +59,6 @@ class Database:
 		self.bingo_parser = self.BingoParser()
 	
 		self.__buildBingo()
-		self.check, self.bingo = self.__getData()
 	
 	def __buildBingo(self):
 		if self.file_manager.checkDataExistence():
