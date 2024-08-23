@@ -12,6 +12,8 @@ class BingoParser:
 	
 	def __buildBingo(self, raw_bingo, names):
 		bingo = []
+		if raw_bingo[-1] == "":
+			raw_bingo.pop(-1)
 		for elem in raw_bingo:
 			if "XX" in elem:
 				for name in names:

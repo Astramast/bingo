@@ -1,17 +1,17 @@
 0000000000000000000000000
-Baptiste, Nicolas
+Baptiste,Nicolas
 Ils abandonnent
 Ils dorment chez l'habitant
 Ils se font poursuivre
 Ils prennent le train en France
 Ils se font aider par d'autres cyclistes
-X tombe
-X déraille
-X crève un pneu
-X casse sa chaîne
-X tombe malade
-X pleure en premier
-X se fait klaxonner
-X descend en montée en premier
-X perds un truc
-X vomis
+XX tombe
+XX déraille
+XX crève un pneu
+XX casse sa chaîne
+XX tombe malade
+XX pleure en premier
+XX se fait klaxonner
+XX descend en montée en premier
+XX perds un truc
+XX vomis

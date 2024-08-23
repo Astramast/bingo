@@ -8,7 +8,7 @@ class MyApp(App):
 	def build(self):
 		self.db = Database(App.get_running_app().user_data_dir)
 		self.sm = ScreenManager()
-		self.sm.add_widget(MainScreen(name="main"))
+		self.sm.add_widget(MainScreen(db, name="main"))
 		return self.sm
 
 
