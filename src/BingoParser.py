@@ -6,7 +6,7 @@ class BingoParser:
 	
 	def __splitContent(self, content):
 		content_list = content.split("\n")
-		check = content_list.pop(0)
+		check = list(content_list.pop(0))
 		names = content_list.pop(0).split(",")
 		return check, names, content_list
 	

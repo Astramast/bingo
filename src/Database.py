@@ -6,12 +6,11 @@ from BingoParser import BingoParser
 
 
 class Database:
-	DATA_FILE = "bingo.txt"
-	DEFAULT_FILE = "BINGO.txt"
-	def __init__(self, directory):
-		self.directory = directory
-		self.file_manager = FileManager(directory)
-		self.bingo_parser = BingoParser()
+	def __init__(self, default_file, data_file, file_manager, bingo_parser):
+		self.DEFAULT_FILE = default_file
+		self.DATA_FILE = data_file
+		self.file_manager = file_manager
+		self.bingo_parser = bingo_parser
 	
 		if self.file_manager.checkFileExistence(self.DATA_FILE) == False:
 			self.__buildBingo()
@@ -26,7 +25,7 @@ class Database:
 	
 	def __writeData(self, check, bingo):
 		# Double \n because no names in the bingo file
-		text = check + "\n\n" + "\n".join(bingo)
+		text = "".join(check) + "\n\n" + "\n".join(bingo)
 		self.file_manager.setFileContent(self.DATA_FILE, text)
 	
 	def __extractData(self):
@@ -40,6 +39,6 @@ class Database:
 		else:
 			self.check[case_number] = 1
 	
-	def getBingo(self):
-		return self.bingo[:]
+	def save(self):
+		self.__writeData(self.check, self.bingo)
 
