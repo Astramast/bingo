@@ -33,11 +33,12 @@ class Database:
 		check, bingo = self.bingo_parser.parse(text)
 		return check, bingo
 	
-	def checkBingo(self, case_number):
+	def changeCaseState(self, case_number):
 		if self.check[case_number] == 1:
 			self.check[case_number] = 0
 		else:
 			self.check[case_number] = 1
+		self.save()
 	
 	def save(self):
 		self.__writeData(self.check, self.bingo)

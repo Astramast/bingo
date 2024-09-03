@@ -1,13 +1,11 @@
 class Controller:
-	def __init__(self, view, model):
-		self.view = view
-		self.model = model
+	def __init__(self, view_factory, model_factory):
+		self.view = view_factory.generateView(self)
+		self.model = model_factory.generateView(self)
 	
-	def save(self):
-		self.model.save()
+	def onCaseClick(self, case_number):
+		self.model.changeCaseState(case_number)
 	
-	def checkBingo(self, case_number):
-		self.model.checkBingo(case_number)
-		self.view.swapColor(case_number)
-		self.save()
+	def onCaseDataChanged(self, case_number, state):
+		self.view.changeCaseState(case_number, state)
 
